@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="source\prx.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\stdafx.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="paf.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="stdc.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="sysnet.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vshmain.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="vshtask.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{228d8441-f49a-4f79-9464-336ebccf356f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{4e3d7b01-160a-415b-9cc1-8f052a247929}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

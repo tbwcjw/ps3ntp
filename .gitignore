@@ -1,0 +1,7 @@
+*.txt
+*.opensdf
+*.sdf
+*.sln
+*.suo
+PS3_Debug/
+
