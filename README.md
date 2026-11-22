@@ -35,13 +35,13 @@ PS3NTP creates the directory ```/dev_hdd0/tmp/ps3ntp``` and ```ps3ntp.cfg``` wit
 ps3ntp.cfg example:
 
 ```
-ntp_poll_interval_s=1020      //time between polling ntp servers (seconds)
-ntp_socket_timeout_s=30		  //socket timeout (seconds)
-no_answer_interval_s=60		  //all ntp servers unreachable, retry after (seconds)
-drift_tolerance_ns=100000000  //allow x nanoseconds of clock drift
-log_enable=1			      //enable/disable logging (1=true, 0=false)*
-log_persist=1				  //log clears on each boot (1=true, 0=false)
-notify_enable=1				  //on screen notifications for sync events, and failures (1=true, 0=false)
+ntp_poll_interval_s=1020         	#time between polling ntp servers (seconds)
+ntp_socket_timeout_s=30         	#socket timeout (seconds)
+no_answer_interval_s=60        		#all ntp servers unreachable, retry after (seconds)
+drift_tolerance_ns=100000000      	#allow x nanoseconds of clock drift
+log_enable=1                     	#enable/disable logging (1=true, 0=false)*
+log_persist=1                     	#log clears on each boot (1=true, 0=false)
+notify_enable=1                     	#on screen notifications for sync events, and failures (1=true, 0=false)
 ```
 
 *The log file can be found at ```/dev_hdd0/tmp/ps3ntp/ps3ntp.log```.
