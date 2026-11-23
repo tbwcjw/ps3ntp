@@ -823,7 +823,7 @@ extern "C" int ps3ntp_stop(void)
 	uint64_t ret = 0;
 	sys_ppu_thread_t exit_thread_id;
 
-	sys_ppu_thread_create(&exit_thread_id, exit_thread, NULL, 0x000, (256 * 1024), SYS_PPU_THREAD_CREATE_JOINABLE, "ps3load_exit");
+	sys_ppu_thread_create(&exit_thread_id, exit_thread, NULL, 0x000, (32 * 1024), SYS_PPU_THREAD_CREATE_JOINABLE, "ps3load_exit");
 	sys_ppu_thread_join(exit_thread_id, &ret);
 
 	finalize_module();
@@ -841,6 +841,6 @@ extern "C" int ps3ntp_entry(void)
 
 	running = true;
 
-	sys_ppu_thread_create(&worker_thread_id, worker_thread, 0, 1000, (256 * 1024), SYS_PPU_THREAD_CREATE_JOINABLE, "ps3ntp");
+	sys_ppu_thread_create(&worker_thread_id, worker_thread, 0, 1000, (64 * 1024), SYS_PPU_THREAD_CREATE_JOINABLE, "ps3ntp");
 	return SYS_PRX_RESIDENT;
 }
