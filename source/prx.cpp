@@ -13,7 +13,7 @@
 #include <netdb.h>
 
 #include "stdc.h"
-#include "sysnet.h"								Q
+#include "sysnet.h"
 #include "vshmain.h"
 #include "vshtask.h"
 #include "paf.h"
