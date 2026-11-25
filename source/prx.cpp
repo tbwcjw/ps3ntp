@@ -71,9 +71,11 @@ typedef struct
 	bool log_enable;
 	bool log_persist;
 	bool notify_enable;
+	bool do_xmb_check;
 } ntp_config_t;
 
-//11-25-2026 - backed off default polling/drift tolerance values
+//11-25-2026 - backed off default polling/drift tolerance values,
+//log_persist and notify_enable false by default.
 static const ntp_config_t ntp_config_default = {
 	3600,         // ntp_poll_interval_s
 	30,           // ntp_socket_timeout_s
@@ -82,6 +84,7 @@ static const ntp_config_t ntp_config_default = {
 	1,            // log_enable
 	0,            // log_persist
 	0,            // notify_enable
+	1,			  // do_xmb_check
 };
 
 static ntp_config_t ntp_config;
@@ -91,7 +94,7 @@ static const char *ntp_servers[NTP_MAX_SERVERS];
 static size_t ntp_server_count = 0;
 
 //utils
-#define IS_ON_XMB		(GetCooperationMode() == 0)
+#define IS_ON_XMB (!ntp_config.do_xmb_check || GetCooperationMode() == 0)
 #define BEEP1			{ system_call_3(SC_RING_BUZZER, 0x1004, 0x4, 0x6); }
 #define NOTIFY(msg)  do { if (ntp_config.notify_enable) vshtask_notify(msg); } while (0)
 
@@ -298,6 +301,7 @@ static ntp_config_response_t load_config(void)
 		len += snprintf(buf + len, sizeof(buf)-len, "log_enable=%d\n", ntp_config.log_enable ? 1 : 0);
 		len += snprintf(buf + len, sizeof(buf)-len, "log_persist=%d\n", ntp_config.log_persist ? 1 : 0);
 		len += snprintf(buf + len, sizeof(buf)-len, "notify_enable=%d\n", ntp_config.notify_enable ? 1 : 0);
+		len += snprintf(buf + len, sizeof(buf)-len, "do_xmb_check=%d\n", ntp_config.do_xmb_check ? 1 : 0);
 
 		ret = cellFsOpen(CFG_FILE, CELL_FS_O_WRONLY | CELL_FS_O_CREAT | CELL_FS_O_TRUNC, &fd, NULL, 0);
 		if (ret != CELL_FS_OK)
@@ -506,6 +510,17 @@ static ntp_config_response_t load_config(void)
 				else
 				{
 					ntp_config.notify_enable = (val[0] == '1');
+				}
+			}
+			else if (strcmp(key, "do_xmb_check") == 0)
+			{
+				if (val[1] != '\0' || (val[0] != '0' && val[0] != '1'))
+				{
+					bad = 1;
+				}
+				else
+				{
+					ntp_config.do_xmb_check = (val[0] == '1');
 				}
 			}
 			else
@@ -723,6 +738,11 @@ static void worker_thread(uint64_t arg)
 		LOG_WRITE("ps3ntp worker started");
 	}
 
+	if (!ntp_config.do_xmb_check)
+	{
+		LOG_WRITE("experimental: xmb check is disabled");
+	}
+
 	if (load_serverlist() < (serverlist_response_t)SL_SUCCESS)
 	{
 		NOTIFY("Failed to load serverlist, using default NTP server.");
@@ -783,7 +803,7 @@ static void worker_thread(uint64_t arg)
 		else
 		{
 			wait_s = XMB_CHECK_INTERVAL_S;
-			LOG_WRITE("current interval: %d (waiting for xmb)", XMB_CHECK_INTERVAL_S);
+			//LOG_WRITE("current interval: %d (waiting for xmb)", XMB_CHECK_INTERVAL_S);
 		}
 
 		for (uint32_t s = 0; s < wait_s && running; s++)
