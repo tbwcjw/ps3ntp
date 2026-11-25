@@ -44,6 +44,9 @@ log_persist=1                     	#log clears on each boot (1=true, 0=false)
 notify_enable=1                     	#on screen notifications for sync events, and failures (1=true, 0=false)
 ```
 
+The default configuration is fairly aggressive. Allowing for 100ms of drift and polling the NTP server(s) every 17 minutes. On a good, working system this is *far* too aggressive.
+On my system, a sync would be triggered every ~6 hours. It' clock only drifts 5ppm. As such, I can back off the polling interval, and allow more drift tolerance. We're running a PS3, not a server farm... 100ms is nothing.
+
 *The log file can be found at ```/dev_hdd0/tmp/ps3ntp/ps3ntp.log```.
 
 ## Serverlist
