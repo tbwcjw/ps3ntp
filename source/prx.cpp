@@ -31,7 +31,7 @@ SYS_MODULE_EXIT(ps3ntp_stop);
 
 
 //identity
-#define PS3NTPVERSION					"V1.0"
+#define PS3NTPVERSION					"V1.1"
 #define PS3NTPTITLE						"PS3NTP "
 #define PS3NTPAUTHOR					"github:tbwcjw/ps3ntp"
 

@@ -35,13 +35,14 @@ PS3NTP creates the directory ```/dev_hdd0/tmp/ps3ntp``` and ```ps3ntp.cfg``` wit
 ps3ntp.cfg example:
 
 ```
-ntp_poll_interval_s=1020         	#time between polling ntp servers (seconds)
+ntp_poll_interval_s=3600         	#time between polling ntp servers (seconds)
 ntp_socket_timeout_s=30         	#socket timeout (seconds)
 no_answer_interval_s=60        		#all ntp servers unreachable, retry after (seconds)
 drift_tolerance_ns=100000000      	#allow x nanoseconds of clock drift
 log_enable=1                     	#enable/disable logging (1=true, 0=false)*
-log_persist=1                     	#log clears on each boot (1=true, 0=false)
-notify_enable=1                     	#on screen notifications for sync events, and failures (1=true, 0=false)
+log_persist=0                     	#log clears on each boot (1=true, 0=false)
+notify_enable=0                 	#on screen notifications for sync events, and failures (1=true, 0=false)
+do_xmb_check=1						#only poll/sync on XMB (1=true, 0=false) [experimental]
 ```
 
 The default configuration is fairly aggressive. Allowing for 100ms of drift and polling the NTP server(s) every 17 minutes. On a good, working system this is *far* too aggressive.
