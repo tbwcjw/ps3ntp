@@ -730,12 +730,14 @@ static void worker_thread(uint64_t arg)
 	wait_for_xmb(30);
 	NOTIFY(PS3NTPTITLE PS3NTPVERSION "\r\n" PS3NTPAUTHOR);
 	bool init = true;   //initial sync when loaded
+	bool on_xmb = IS_ON_XMB;
 
 	while (running)
 	{
+		on_xmb = IS_ON_XMB;
 		uint32_t wait_s = ntp_config.ntp_poll_interval_s;
 
-		if (init || IS_ON_XMB)
+		if (init || on_xmb)
 		{
 			const char *synced_with = NULL;
 
@@ -785,6 +787,9 @@ static void worker_thread(uint64_t arg)
 
 		for (uint32_t s = 0; s < wait_s && running; s++)
 		{
+			if (IS_ON_XMB != on_xmb)
+				break;
+
 			sys_timer_sleep(1);
 		}
 	}
@@ -823,7 +828,7 @@ extern "C" int ps3ntp_stop(void)
 	uint64_t ret = 0;
 	sys_ppu_thread_t exit_thread_id;
 
-	sys_ppu_thread_create(&exit_thread_id, exit_thread, NULL, 0x000, (32 * 1024), SYS_PPU_THREAD_CREATE_JOINABLE, "ps3load_exit");
+	sys_ppu_thread_create(&exit_thread_id, exit_thread, NULL, 0x000, (32 * 1024), SYS_PPU_THREAD_CREATE_JOINABLE, "ps3ntp_exit");
 	sys_ppu_thread_join(exit_thread_id, &ret);
 
 	finalize_module();
@@ -841,6 +846,6 @@ extern "C" int ps3ntp_entry(void)
 
 	running = true;
 
-	sys_ppu_thread_create(&worker_thread_id, worker_thread, 0, 1000, (64 * 1024), SYS_PPU_THREAD_CREATE_JOINABLE, "ps3ntp");
+	sys_ppu_thread_create(&worker_thread_id, worker_thread, 0, 1000, (64 * 1024), SYS_PPU_THREAD_CREATE_JOINABLE, "ps3ntp_worker");
 	return SYS_PRX_RESIDENT;
 }

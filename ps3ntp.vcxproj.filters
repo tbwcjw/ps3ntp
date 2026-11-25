@@ -9,22 +9,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="paf.h">
+    <ClInclude Include="include\paf.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="include\stdafx.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="stdc.h">
+    <ClInclude Include="include\stdc.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="sysnet.h">
+    <ClInclude Include="include\sysnet.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="vshmain.h">
+    <ClInclude Include="include\vshmain.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="vshtask.h">
+    <ClInclude Include="include\vshtask.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
