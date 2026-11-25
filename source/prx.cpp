@@ -73,14 +73,15 @@ typedef struct
 	bool notify_enable;
 } ntp_config_t;
 
+//11-25-2026 - backed off default polling/drift tolerance values
 static const ntp_config_t ntp_config_default = {
-	1020,         // ntp_poll_interval_s
+	3600,         // ntp_poll_interval_s
 	30,           // ntp_socket_timeout_s
 	60,           // no_answer_interval_s
 	100000000LL,  // drift_tolerance_ns (100 ms)
 	1,            // log_enable
-	1,            // log_persist
-	1,            // notify_enable
+	0,            // log_persist
+	0,            // notify_enable
 };
 
 static ntp_config_t ntp_config;
